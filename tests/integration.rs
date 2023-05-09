@@ -17,7 +17,6 @@ use fee_collector_app::{
     msg::{FeeCollectorExecuteMsgFns, FeeCollectorQueryMsgFns},
     state::Config,
 };
-use speculoos::iter::ContainingIteratorAssertions;
 use speculoos::{assert_that, prelude::ContainingIntoIterAssertions, vec::VecAssertions};
 use wyndex_bundle::{WynDex, WYNDEX, WYND_TOKEN};
 
@@ -202,13 +201,13 @@ fn test_update_config() -> AResult {
             Some(COMMISSION_ADDR.to_string()),
             Some(WYNDEX.to_string()),
             Some(USD.to_string()),
-            Some(Decimal::from_str("0.1")?),
+            Some(Decimal::from_str("0.2")?),
         )?;
 
     let config: Config = app.fee_collector.config()?;
     assert_that!(config.fee_asset).is_equal_to(usd_asset.clone());
     assert_that!(config.dex).is_equal_to(WYNDEX.to_string());
-    assert_that!(config.max_swap_spread).is_equal_to(Decimal::from_str("0.1")?);
+    assert_that!(config.max_swap_spread).is_equal_to(Decimal::from_str("0.2")?);
     assert_that!(config.commission_addr).is_equal_to(commission_addr);
 
     // Adding fee asset is not allowed
@@ -252,8 +251,8 @@ fn test_collect_fees() -> AResult {
         &app.account.proxy.address()?,
         vec![
             coin(100_000u128, EUR),
-            coin(100_000u128, USD),
-            coin(100_000u128, WYND_TOKEN),
+            coin(10_000u128, USD),
+            coin(10_000u128, WYND_TOKEN),
         ],
     )?;
 
@@ -268,7 +267,7 @@ fn test_collect_fees() -> AResult {
     let fee_balances = mock.query_all_balances(&app.account.proxy.address()?)?;
     assert_that!(fee_balances).is_empty();
 
-    let expected_usd_balance = coin(281322u128, EUR);
+    let expected_usd_balance = coin(119742u128, EUR);
     let commission_balances = mock.query_all_balances(&Addr::unchecked(COMMISSION_ADDR))?;
     assert_that!(commission_balances).has_length(1);
 

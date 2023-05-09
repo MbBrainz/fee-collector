@@ -6,9 +6,25 @@
     {
       "description": "Query the configuration Returns [`ConfigResponse`]",
       "type": "object",
-      "required": ["config"],
+      "required": [
+        "config"
+      ],
       "properties": {
         "config": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Query the list of allowed assets Returns [`Vec<String>`]",
+      "type": "object",
+      "required": [
+        "allowed_assets"
+      ],
+      "properties": {
+        "allowed_assets": {
           "type": "object",
           "additionalProperties": false
         }

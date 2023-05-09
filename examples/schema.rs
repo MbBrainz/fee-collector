@@ -1,4 +1,6 @@
 use cosmwasm_schema::remove_schemas;
+#[cfg(feature = "schema")]
+use fee_collector_app::contract::FeeCollectorApp;
 use std::env::current_dir;
 use std::fs::create_dir_all;
 
