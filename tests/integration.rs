@@ -17,7 +17,6 @@ use fee_collector_app::{
     msg::{FeeCollectorExecuteMsgFns, FeeCollectorQueryMsgFns},
     state::Config,
 };
-use speculoos::iter::ContainingIteratorAssertions;
 use speculoos::{assert_that, prelude::ContainingIntoIterAssertions, vec::VecAssertions};
 use wyndex_bundle::{WynDex, WYNDEX, WYND_TOKEN};
 
